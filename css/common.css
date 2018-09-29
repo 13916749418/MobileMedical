@@ -1,0 +1,82 @@
+html{
+  font-size: 10px;
+}
+/*去掉滑动条*/
+::-webkit-scrollbar { display: none }
+/*去掉按钮点击后边框*/
+input,button,textarea,select,a:focus {
+     outline: none;
+}
+/*按钮点击效果*/
+input,button{
+  transition: all 0.2s;
+}
+input:active,button:active{
+  transform: scale(0.95);
+}
+body{
+  background: #f6f6f6;
+  margin: 0;
+  padding: 0;
+}
+header{
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  width:100vw;
+  height:15vw;
+  background: #960021;
+  color:#fff;
+  justify-content:space-between;
+  align-items: center;
+  text-align: center;
+  font-size: 1.8rem;
+  z-index: 2;
+  overflow: hidden;
+  /*padding: 5vw 0 0 0;*/
+}
+header>div:nth-of-type(1),header>div:nth-last-of-type(1){
+  transition: all 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 13vw;
+  height: 100%;
+}
+header>div:nth-of-type(1):active{
+  background: #aa0000;
+}
+header>div:nth-of-type(1)>img{
+  width: 4vw;
+  padding: 5vw;
+}
+.adaptTop{
+  margin:19vw auto 0 !important;
+}
+.adaptTopBottom{
+  margin:19vw auto 60px !important;
+}
+.noMore{
+  text-align: center;
+  font-size: 1.4rem;
+  padding: 3vw 0 6vw;
+  color: #bbb;
+}
+.choose{
+  display: flex;
+  width: 55vw;
+  font-size: 1.5rem;
+  border-radius: 30px;
+  border: solid 1px #fff;
+  overflow: hidden;
+}
+.choose>div{
+  transition: all 0.2s;
+  width:50%;
+  padding: 1vw 0;
+}
+.choose .on{
+  color:#c4311b;
+  background: #fff;
+}

@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+<title></title>
+<link rel="stylesheet" type="text/css" href="../css/common.css" />
+<link rel="stylesheet" type="text/css" href="../css/login.css" />
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/util.js"></script>
+<script type="text/javascript" src="../script/jquery.min.js"></script>
+<script type="text/javascript" src="../script/jquery.cookie.js"></script>
+</head>
+<body>
+<div class='main'>
+    <img src="../image/logo.png" >
+    <div><input type="text" maxlength='11' name='cellphone' placeholder="请输入手机号"></div>
+    <div><input type="password" name='password' placeholder="请输入密码"></div>
+    <button class='submit'>登录</button>
+</div>
+
+<div class='handle'>
+  <span title='myPassword'>忘记密码</span>
+  <span title='register'>注册账号</span>
+</div>
+
+<script>
+
+$(function(){
+  //输入校验
+  $('input[name=cellphone],.getCode').on('input',function(e){
+		let value = $(this).val().replace(emotionReg,'');//过滤掉emoji
+    value = value.match(/[0-9]/g);
+    if(value) value = value.join('');
+    $(this).val(value);
+	});
+
+})
+
+apiready = function() {
+  //获取传值alert(api.pageParam.id)
+
+  //点击登录
+  var submitTurn = true;
+  $('.submit').on('click',function(){
+    let that = $(this);
+    if(submitTurn){
+      submitTurn = false;
+
+      let cellphone=$('input[name=cellphone]').val();
+      let password=$('input[name=password]').val();
+
+      if(!$('input[name=cellphone]').val()){
+        api.toast({ msg: '请填写手机号',duration: 2000,location: 'bottom' });
+        submitTurn = true;
+        return;
+      }
+
+      if($('input[name=cellphone]').val().length<11){
+        api.toast({ msg: '您的电话不足11位',duration: 2000,location: 'bottom' });
+        return;
+      }
+
+      if(!$('input[name=password]').val()){
+        api.toast({ msg: '请填写密码',duration: 2000,location: 'bottom' });
+        submitTurn = true;
+        return;
+      }
+
+      that.text('请稍等..');
+
+      //判断登录
+      $.ajax({
+        url:reqHost + "LoginForDoctor.aspx",
+        data:{
+          Mobile:cellphone,
+          Password:password
+        },
+        method:'POST',
+        dataType:'json',
+        success:function(data){
+          console.log(JSON.stringify(data));
+
+          if(data.status=='1'){
+            api.toast({ msg: '登录成功',duration: 2000,location: 'bottom' });
+
+            setTimeout(()=>{
+              api.openFrame({
+                  name: 'main',
+                  url: `http://211.152.43.99:8082/mobileh5/navigation.aspx?userid=${data.userid}`,
+                  rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
+                      //marginTop: 30, // main页面距离win顶部的高度
+                      //marginBottom: footerH, // main页面距离win底部的高度
+                      w: 'auto', // main页面的宽度 自适应屏幕宽度
+                      h: 'auto'
+                  }
+              });
+            },1500);
+          }else{
+            api.toast({ msg: data.errorinfo,duration: 2000,location: 'bottom' });
+
+            that.text('登录');
+            submitTurn = true;
+
+          }
+
+        }
+      });
+
+    }
+
+  });
+
+  //去注册
+  $('.handle>span').on('click',function(e){
+    let web = e.currentTarget.title;
+    api.openWin({
+        name: web,
+        url: `${web}.html`,
+        pageParam: {
+
+        }
+    });
+  });
+
+  //初始化双击退出
+  initExitEvent();
+
+};
+
+// 返回键双击退出
+function initExitEvent() {
+    var exitFlag = false;
+    api.addEventListener({
+        name: 'keyback'
+    }, function(ret, err) {
+        if (!exitFlag) {
+            api.toast({
+                msg: '再按一次退出',
+                duration: 2000,
+                location: 'bottom'
+            });
+            exitFlag = true;
+        } else {
+            api.closeWidget({
+                silent: true
+            });
+        }
+        setTimeout(function() {
+            exitFlag = false;
+        }, 2000);
+    });
+};
+</script>
+</body>
+</html>

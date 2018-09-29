@@ -1,0 +1,62 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 140vw;
+}
+.main div{
+  height: 10vw;
+  padding: 2vw 0;
+}
+.main input{
+    border: none;
+    border-radius: 5vw;
+    padding: 0 4vw;
+    font-size: 1.4rem;
+    margin: 0 0 4vw;
+    box-shadow: 0 1px 15px #ccc;
+    width: 65vw;
+        height: 100%;
+}
+.main img{
+    border-radius: 50%;
+    width: 25vw;
+    margin: 0 0 10vw 0;
+    box-shadow: 0 1px 15px #bbb;
+}
+.main button{
+    transition: all 0.2s;
+    color: #fff;
+    background: #960021;
+    padding: 2vw 7vw;
+    border: none;
+    border-radius: 20vw;
+    margin: 4vw auto 0;
+}
+.handle{
+    color: #aaa;
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+.handle>span{
+    width:30vw;
+    padding: 5vw 0;
+    text-align: center;
+}
+.inputCode {
+	width:25vw !important;
+}
+.getCode {
+	margin:0 0 0 3vw !important;
+	padding:2.4vw 4vw !important;
+}
+.getCode.on{
+  background: #ddd;
+}
+.submit{
+    padding: 3vw 10vw !important;
+    font-size: 1.6rem !important;
+}
